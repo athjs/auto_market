@@ -24,8 +24,10 @@ struct list *create() {
 
 int find(struct list *list, int ref) {
   int i = 0;
+  if (list == NULL)
+    return -1;
   for (; i < list->size; i++) {
-    if (list[i].item[i].ref == ref)
+    if (list->item[i].ref == ref)
       return i;
   }
   return i;
@@ -49,6 +51,7 @@ int list_add(struct list *list, int ref, int number) {
     list->item[0].ref = ref;
     list->capacity++;
     list->size++;
+    return 1;
   }
   int here = find(list, ref);
   if (here < list->capacity) {
@@ -58,21 +61,20 @@ int list_add(struct list *list, int ref, int number) {
   else {
     // case the data base is big enough
     if (list->size < list->capacity) {
-      here = find(list, INVALID_REF);
-      list->item[here].number = ref;
+      list->item[here].ref = ref;
       list->item[here].number = number;
     }
     // case the database isn't big enough
     list->item = realloc(list->item, 2 * list->capacity * sizeof(struct item));
     list->capacity *= 2;
-    list->item[here].number = ref;
+    list->item[here].ref = ref;
     list->item[here].number = number;
   }
   list->size++;
   return 1;
 }
 
-void shift_left(struct item *item, int size, int begin) {
+void shift__left(struct item *item, int size, int begin) {
   for (int i = begin; i < size - 1; i++) {
     item[i] = item[i + 1];
   }
@@ -90,9 +92,9 @@ int list_remove(int ref, struct list *list) {
     if (list->size == list->capacity / 2) {
       list->item = realloc(list->item, list->size * sizeof(struct item));
       list->capacity = list->capacity / 2;
-      shift_left(list->item, list->size, here);
+      shift__left(list->item, list->size, here);
     } else {
-      shift_left(list->item, list->size, here);
+      shift__left(list->item, list->size, here);
     }
   }
   list->size--;
@@ -112,8 +114,16 @@ int list_modify(struct list *list, int ref, int new_ref) {
   return 1;
 }
 
-// Prints items in the list
+int list_size(struct list *list) { return list->size; }
 
+int list_capacity(struct list *list) { return list->capacity; }
+// Prints items in the list
+int item_number(struct list *list, int ref) {
+  int here = find(list, ref);
+  if (here == list->size)
+    return -1;
+  return list->item[here].number;
+}
 void list_print(struct list *list) {
   for (int i = 0; i < list->size; ++i) {
     printf("%3d %3d \n ", list->item[i].ref, list->item[i].number);

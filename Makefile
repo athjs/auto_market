@@ -1,14 +1,23 @@
-
-CFLAGS = -std=c99 -Wall -Werror -Wextra 
+CFLAGS = -std=c99 -Wall -Werror -Wextra -g
 CC = gcc
 
-all: build 
+all: build
 
-%.o : src/%.c
-	$(CC) $< $(CFLAGS) -c
+build: test
 
-clean: 
-	rm *.o 
+# Compile the object files from the source directory
+src/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: clean 
+# Compile the object files from the test directory
+tst/%.o: tst/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Linking the object files to create the test executable
+test: src/market.o tst/test_market.o tst/alltest.o
+	$(CC) $(CFLAGS) -o test src/market.o tst/test_market.o tst/alltest.o
+
+clean:
+	rm -f src/*.o tst/*.o test
+
+.PHONY: clean
