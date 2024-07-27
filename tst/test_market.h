@@ -10,5 +10,8 @@ void test_is_empty();
 void test_find();
 
 void test_add();
-#endif // !_TEST_MARKET_H
 
+void test_remove();
+
+void test_modify();
+#endif // !_TEST_MARKET_H
