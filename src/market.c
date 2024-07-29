@@ -1,11 +1,13 @@
 #include "market.h"
+#include "math.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 struct item {
   int ref;
-  int cost; 
+  int cost;
+  int price;
   int number;
 };
 
@@ -13,6 +15,7 @@ struct list {
   struct item *item;
   int size;
   int capacity;
+  int balance;
 };
 
 struct list *create() {
@@ -20,6 +23,7 @@ struct list *create() {
   list->item = NULL;
   list->size = 0;
   list->capacity = 0;
+  list->balance = 0;
   return list;
 }
 
@@ -75,6 +79,7 @@ int list_add(struct list *list, int ref, int number) {
   return 1;
 }
 
+// update the market when an item is removed from the data base
 void shift__left(struct item *item, int size, int begin) {
   for (int i = begin; i < size - 1; i++) {
     item[i] = item[i + 1];
@@ -115,10 +120,13 @@ int list_modify(struct list *list, int ref, int new_ref) {
   return 1;
 }
 
+// returns the list size
 int list_size(struct list *list) { return list->size; }
 
+// returns the capacity list
 int list_capacity(struct list *list) { return list->capacity; }
-// Prints items in the list
+
+// returns the number of an item in the data base
 int item_number(struct list *list, int ref) {
   int here = find(list, ref);
   if (here == list->size)
@@ -126,17 +134,45 @@ int item_number(struct list *list, int ref) {
   return list->item[here].number;
 }
 
-int cost_item(struct list * list)
-{
-  return list->item->cost;
+// returns the item cost
+int cost_item(struct list *list, int ref) {
+  int here = find(list, ref);
+  if (here == list->size)
+    return -1;
+  return list->item[here].cost;
 }
 
+//returns the sell price 
+int item_price(struct list *list, int ref) {
+  int here = find(list, ref);
+  if (here == list->size)
+    return -1;
+  return list->item[here].price;
+}
+
+// return the current balance of the market
+int marekt_balance(struct list *list) { return list->balance; }
+
+// returns the ref of an item
+int item_ref(struct item *item) { return item->ref; }
+
+// Prints items in the list
 void list_print(struct list *list) {
   for (int i = 0; i < list->size; ++i) {
     printf("%3d %3d \n ", list->item[i].ref, list->item[i].number);
   }
 }
-// freed the list
+
+// update the balance a purchase will be a negative value
+int new_balance(struct list *list, int amount) {
+  if (amount <= list->balance) {
+    list->balance -= amount;
+    return list->balance;
+  }
+  return -1;
+}
+
+// frees the list
 void list_free(struct list *list) {
   free(list->item);
   free(list);

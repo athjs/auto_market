@@ -1,6 +1,5 @@
 #ifndef _MARKET_H_
 #define _MARKET_H_
-struct set;
 
 struct item;
 
@@ -30,6 +29,13 @@ void list_print(struct list *list);
 
 void list_free(struct list *list);
 
-int item_cost(struct list * list);
+int item_cost(struct list *list, int ref);
 
+int item_price(struct list * list, int ref);
+
+int market_balance(struct list *list);
+
+int item_ref(struct item * item);
+
+int new_balance(struct list *list, int amount);
 #endif // !_MARKET_H_
