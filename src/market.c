@@ -5,6 +5,7 @@
 
 struct item {
   int ref;
+  int cost; 
   int number;
 };
 
@@ -124,6 +125,12 @@ int item_number(struct list *list, int ref) {
     return -1;
   return list->item[here].number;
 }
+
+int cost_item(struct list * list)
+{
+  return list->item->cost;
+}
+
 void list_print(struct list *list) {
   for (int i = 0; i < list->size; ++i) {
     printf("%3d %3d \n ", list->item[i].ref, list->item[i].number);

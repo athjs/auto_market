@@ -30,4 +30,6 @@ void list_print(struct list *list);
 
 void list_free(struct list *list);
 
+int item_cost(struct list * list);
+
 #endif // !_MARKET_H_
