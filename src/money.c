@@ -5,17 +5,15 @@ int is_possible(struct list *list, struct item *item, int number) {
 
   if (!list)
     return -1;
-  int ref = item_ref(item);
-  int cost =price_item(list, ref) * number;
-  if (cost > market_balance(list))
-    return 0;
-  return 1;
+  int cost = cost_item(item) * number;
+  if (cost <= market_balance(list))
+    return 1;
+  return 0;
 }
 
 // returns the maximum number purchasable
 int max_possible(struct list *list, struct item *item) {
-  int ref = item_ref(item);
-  int cost = cost_item(list, ref);
+  int cost = cost_item(item);
   int balance = market_balance(list);
   return max_amount(balance, cost);
 }
@@ -28,26 +26,27 @@ int item_purchase(struct list *list, struct item *item, int amount) {
     return -1;
   if (is_possible(list, item, amount)) {
     list_add(list, item_ref(item), amount);
-    new_balance(list, -amount * cost_item(list, item_ref(item)));
+    new_balance(list, -amount * cost_item(item));
     return amount;
   }
   int max = max_possible(list, item);
   list_add(list, item_ref(item), max);
-  new_balance(list, -amount * cost_item(list, item_ref(item)));
+  new_balance(list, -amount * cost_item(item));
   return max;
 }
 
-//updates the data base when an item is sold and returns the number of item sold
+// updates the data base when an item is sold and returns the number of item
+// sold
 int item_sell(struct list *list, struct item *item, int amount) {
   if (!list)
     return -1;
-  if (item_number(list, item_ref(item)) >= amount) {
+  if (item_number(item) >= amount) {
     list_remove(item_ref(item), list);
-    new_balance(list, amount * price_item(list, item_ref(item)));
+    new_balance(list, amount * price_item(item));
     return amount;
   }
-  int max = item_number(list, item_ref(item));
-  new_balance(list, item_number(list, max) * price_item(list, max));
-  list_add(list, item_ref(item), item_number(list, max));
+  int max = item_number(item);
+  new_balance(list, item_number(item) * price_item(item));
+  list_add(list, item_ref(item), item_number(item));
   return max;
 }

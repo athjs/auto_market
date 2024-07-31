@@ -27,6 +27,19 @@ struct list *create() {
   return list;
 }
 
+struct item *product(int ref, int cost, int price, int number) {
+  struct item *item = malloc(sizeof(struct item));
+  item->cost = cost;
+  item->price = price;
+  item->number = number;
+  item->ref = ref;
+  return item;
+}
+
+struct item *access_item(struct list *list, int ref) {
+  return &list->item[ref];
+}
+
 int find(struct list *list, int ref) {
   int i = 0;
   if (list == NULL)
@@ -127,28 +140,13 @@ int list_size(struct list *list) { return list->size; }
 int list_capacity(struct list *list) { return list->capacity; }
 
 // returns the number of an item in the data base
-int item_number(struct list *list, int ref) {
-  int here = find(list, ref);
-  if (here == list->size)
-    return -1;
-  return list->item[here].number;
-}
+int item_number(struct item *item) { return item->number; }
 
 // returns the item cost
-int cost_item(struct list *list, int ref) {
-  int here = find(list, ref);
-  if (here == list->size)
-    return -1;
-  return list->item[here].cost;
-}
+int cost_item(struct item *item) { return item->cost; }
 
-//returns the sell price 
-int price_item(struct list *list, int ref) {
-  int here = find(list, ref);
-  if (here == list->size)
-    return -1;
-  return list->item[here].price;
-}
+// returns the sell price
+int price_item(struct item *item) { return item->price; }
 
 // return the current balance of the market
 int market_balance(struct list *list) { return list->balance; }
@@ -163,13 +161,19 @@ void list_print(struct list *list) {
   }
 }
 
-// update the balance a purchase will be a negative value
+// update the balance, a purchase will be a negative value
 int new_balance(struct list *list, int amount) {
-  if (amount <= list->balance) {
-    list->balance -= amount;
+  if (amount < 0) {
+    if (list->balance + amount >= 0) {
+      list->balance += amount;
+      return list->balance;
+    } else
+      return -1;
+  } else {
+
+    list->balance += amount;
     return list->balance;
   }
-  return -1;
 }
 
 // frees the list

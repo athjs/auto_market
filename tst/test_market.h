@@ -14,4 +14,6 @@ void test_add();
 void test_remove();
 
 void test_modify();
+
+void test_balance_update();
 #endif // !_TEST_MARKET_H

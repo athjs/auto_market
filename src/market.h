@@ -7,6 +7,10 @@ struct list;
 
 struct list *create(void);
 
+struct item *product(int ref, int cost, int price, int number);
+
+struct item *access_item(struct list *list, int ref);
+
 void shift__left(struct item *item, int size, int begin);
 
 int find(struct list *list, int ref);
@@ -23,23 +27,21 @@ int list_capacity(struct list *list);
 
 int list_size(struct list *list);
 
-int item_number(struct list *list, int ref);
+int item_number(struct item *item);
 
 void list_print(struct list *list);
 
 void list_free(struct list *list);
 
-int cost_item(struct list *list, int ref);
+int cost_item(struct item *item);
 
-int price_item(struct list *list, int ref);
+int price_item(struct item *item);
 
 int market_balance(struct list *list);
 
 int item_ref(struct item *item);
 
 int new_balance(struct list *list, int amount);
-
-int max_possible(struct list *list, struct item *item);
 
 int item_purchase(struct list *list, struct item *item, int amount);
 

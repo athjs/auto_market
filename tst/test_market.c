@@ -43,9 +43,10 @@ struct list *create_list_nempty() {
 void test_add() {
   struct list *list = create_list_nempty();
   assert(find(list, 1) == 1);
-  assert(item_number(list, 1) == 1);
+  struct item *item = access_item(list, find(list, 1));
+  assert(item_number(item) == 1);
   list_add(list, 1, 15);
-  assert(item_number(list, 1) == 16);
+  assert(item_number(item) == 16);
   printf("*");
   list_free(list);
 }
@@ -79,6 +80,19 @@ void test_modify() {
   assert(list_modify(liste, 0, 14) == 1);
   list_modify(liste, 0, 14);
   assert(find(liste, 14) == 0);
-  list_free(liste); 
+  list_free(liste);
+  printf("*");
+}
+
+void test_balance_update() {
+  struct list *list = create();
+  assert(market_balance(list) == 0);
+  new_balance(list, 100);
+  assert(market_balance(list) == 100);
+  new_balance(list, -100);
+  assert(market_balance(list) == 0);
+  new_balance(list, -1);
+  assert(market_balance(list) == 0);
+  list_free(list);
   printf("*");
 }

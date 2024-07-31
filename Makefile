@@ -15,7 +15,7 @@ tst/%.o: tst/%.c
 
 # Linking the object files to create the test executable
 test: src/market.o src/money.o src/math.o tst/test_market.o tst/test_money.o tst/alltest.o 
-	$(CC) $(CFLAGS) -o test src/market.o src/money.o src/math.c tst/test_market.o tst/alltest.o
+	$(CC) $(CFLAGS) -o test src/market.o src/money.o src/math.c tst/test_market.o tst/test_money.o tst/alltest.o
 
 clean:
 	rm -f src/*.o tst/*.o test

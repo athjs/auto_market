@@ -1,4 +1,5 @@
 #include "test_market.h"
+#include "test_money.h"
 #include <stdio.h>
 #include <stdlib.h>
 int main() {
@@ -8,6 +9,8 @@ int main() {
   test_add();
   test_remove();
   test_modify();
+  test_balance_update();
+  test_is_possible();
   printf("\n");
   return EXIT_SUCCESS;
 }
