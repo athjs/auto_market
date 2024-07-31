@@ -1,13 +1,12 @@
-#include "money.h"
 #include "market.h"
 #include "math.h"
-
 // returns if it's possible to buy the bumber of item
 int is_possible(struct list *list, struct item *item, int number) {
+
   if (!list)
     return -1;
   int ref = item_ref(item);
-  int cost = item_cost(list, ref) * number;
+  int cost =price_item(list, ref) * number;
   if (cost > market_balance(list))
     return 0;
   return 1;
@@ -16,7 +15,7 @@ int is_possible(struct list *list, struct item *item, int number) {
 // returns the maximum number purchasable
 int max_possible(struct list *list, struct item *item) {
   int ref = item_ref(item);
-  int cost = item_cost(list, ref);
+  int cost = cost_item(list, ref);
   int balance = market_balance(list);
   return max_amount(balance, cost);
 }
@@ -29,12 +28,12 @@ int item_purchase(struct list *list, struct item *item, int amount) {
     return -1;
   if (is_possible(list, item, amount)) {
     list_add(list, item_ref(item), amount);
-    new_balance(list, -amount * item_cost(list, item_ref(item)));
+    new_balance(list, -amount * cost_item(list, item_ref(item)));
     return amount;
   }
   int max = max_possible(list, item);
   list_add(list, item_ref(item), max);
-  new_balance(list, -amount * item_cost(list, item_ref(item)));
+  new_balance(list, -amount * cost_item(list, item_ref(item)));
   return max;
 }
 
@@ -44,11 +43,11 @@ int item_sell(struct list *list, struct item *item, int amount) {
     return -1;
   if (item_number(list, item_ref(item)) >= amount) {
     list_remove(item_ref(item), list);
-    new_balance(list, amount * item_price(list, item_ref(item)));
+    new_balance(list, amount * price_item(list, item_ref(item)));
     return amount;
   }
   int max = item_number(list, item_ref(item));
-  new_balance(list, item_number(list, max) * item_price(list, max));
+  new_balance(list, item_number(list, max) * price_item(list, max));
   list_add(list, item_ref(item), item_number(list, max));
   return max;
 }

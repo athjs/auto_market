@@ -29,13 +29,19 @@ void list_print(struct list *list);
 
 void list_free(struct list *list);
 
-int item_cost(struct list *list, int ref);
+int cost_item(struct list *list, int ref);
 
-int item_price(struct list * list, int ref);
+int price_item(struct list *list, int ref);
 
 int market_balance(struct list *list);
 
-int item_ref(struct item * item);
+int item_ref(struct item *item);
 
 int new_balance(struct list *list, int amount);
+
+int max_possible(struct list *list, struct item *item);
+
+int item_purchase(struct list *list, struct item *item, int amount);
+
+int item_sell(struct list *list, struct item *item, int amount);
 #endif // !_MARKET_H_

@@ -143,7 +143,7 @@ int cost_item(struct list *list, int ref) {
 }
 
 //returns the sell price 
-int item_price(struct list *list, int ref) {
+int price_item(struct list *list, int ref) {
   int here = find(list, ref);
   if (here == list->size)
     return -1;
@@ -151,7 +151,7 @@ int item_price(struct list *list, int ref) {
 }
 
 // return the current balance of the market
-int marekt_balance(struct list *list) { return list->balance; }
+int market_balance(struct list *list) { return list->balance; }
 
 // returns the ref of an item
 int item_ref(struct item *item) { return item->ref; }
