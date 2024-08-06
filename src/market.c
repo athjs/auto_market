@@ -140,7 +140,14 @@ int list_size(struct list *list) { return list->size; }
 int list_capacity(struct list *list) { return list->capacity; }
 
 // returns the number of an item in the data base
-int item_number(struct item *item) { return item->number; }
+int item_number(struct item *item, struct list *list) {
+  if (!list)
+    return -1;
+  if (is_empty(list))
+    return -2;
+  int here = find(list, item->ref);
+  return list->item[here].number;
+}
 
 // returns the item cost
 int cost_item(struct item *item) { return item->cost; }

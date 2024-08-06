@@ -11,6 +11,8 @@ int main() {
   test_modify();
   test_balance_update();
   test_is_possible();
+  test_max_possible();
+  test_item_purchase();
   printf("\n");
   return EXIT_SUCCESS;
 }

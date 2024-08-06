@@ -44,9 +44,9 @@ void test_add() {
   struct list *list = create_list_nempty();
   assert(find(list, 1) == 1);
   struct item *item = access_item(list, find(list, 1));
-  assert(item_number(item) == 1);
+  assert(item_number(item,list) == 1);
   list_add(list, 1, 15);
-  assert(item_number(item) == 16);
+  assert(item_number(item,list) == 16);
   printf("*");
   list_free(list);
 }

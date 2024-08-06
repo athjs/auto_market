@@ -27,7 +27,7 @@ int list_capacity(struct list *list);
 
 int list_size(struct list *list);
 
-int item_number(struct item *item);
+int item_number(struct item *item, struct list *list);
 
 void list_print(struct list *list);
 
