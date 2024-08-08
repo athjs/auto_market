@@ -9,7 +9,7 @@ void test_is_possible() {
   assert(is_possible(list, item, 1) == 0);
   new_balance(list, 1);
   assert(is_possible(list, item, 1) == 1);
-  list_add(list, 0, 1);
+  list_add(list, item, 1);
   list_free(list);
   printf("*");
 }
@@ -20,7 +20,7 @@ void test_max_possible() {
   assert(max_possible(list, item) == 0);
   new_balance(list, 100);
   assert(max_possible(list, item) == 9);
-  list_add(list, 1, 9);
+  list_add(list, item, 9);
   new_balance(list, -99);
   assert(max_possible(list, item) == 0);
   list_free(list);
@@ -35,9 +35,17 @@ void test_item_purchase() {
   assert(item_number(item,list) == 10);
   assert(market_balance(list) == 0);
   new_balance(list, 14);
+  assert(cost_item(item)==cost_item(access_item(list,find(list,1))));
   item_purchase(list, item, 2);
   assert(item_number(item,list) == 11);
   assert(market_balance(list) == 4);
   list_free(list);
   printf("*");
+}
+
+void test_item_sell(){
+  struct list * list = create();
+  struct item * item = product(1,10 ,20 ,0 );
+  assert(item_sell(list,item ,0 )==0);
+  list_add(list,item ,10 );
 }

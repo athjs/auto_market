@@ -17,7 +17,7 @@ int find(struct list *list, int ref);
 
 int is_empty(struct list *list);
 
-int list_add(struct list *list, int ref, int number);
+int list_add(struct list *list, struct item *item, int number);
 
 int list_remove(int ref, struct list *list);
 

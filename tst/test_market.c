@@ -22,11 +22,14 @@ void test_is_empty() {
 
 void test_find() {
   struct list *list = create();
+  struct item *item = product(3, 1, 2, 0);
   assert(find(list, 0) == 0);
-  list_add(list, 1, 1);
+  list_add(list, item, 1);
+  struct item *item14 = product(14, 1, 2, 0);
   assert(find(list, 14) == 1);
-  list_add(list, 14, 14);
-  list_add(list, 2, 2);
+  list_add(list, item14, 14);
+  struct item *item2 = product(2, 1, 2, 0);
+  list_add(list, item2, 2);
   assert(find(list, 14) == 1);
   printf("*");
   list_free(list);
@@ -34,19 +37,23 @@ void test_find() {
 
 struct list *create_list_nempty() {
   struct list *list = create();
-  list_add(list, 0, 0);
-  list_add(list, 1, 1);
-  list_add(list, 2, 2);
+
+  struct item *item = product(1, 1, 2, 0);
+  struct item *item1 = product(2, 1, 2, 0);
+  struct item *item2 = product(3, 1, 2, 0);
+  list_add(list, item, 1);
+  list_add(list, item1, 2);
+  list_add(list, item2, 3);
   return list;
 }
 
 void test_add() {
   struct list *list = create_list_nempty();
-  assert(find(list, 1) == 1);
+  assert(find(list, 1) == 0);
   struct item *item = access_item(list, find(list, 1));
-  assert(item_number(item,list) == 1);
-  list_add(list, 1, 15);
-  assert(item_number(item,list) == 16);
+  assert(item_number(item, list) == 1);
+  list_add(list, item, 15);
+  assert(item_number(item, list) == 16);
   printf("*");
   list_free(list);
 }
@@ -65,8 +72,8 @@ void test_remove() {
   assert(list_size(liste) == 1);
   assert(list_capacity(liste) == 2);
   list_remove(0, liste);
-  assert(list_size(liste) == 0);
-  assert(list_capacity(list) == 1);
+  assert(list_size(liste) == 1);
+  assert(list_capacity(list) ==2);
   list_free(liste);
   printf("*");
 }
@@ -77,8 +84,8 @@ void test_modify() {
   list_free(list);
   struct list *liste = create_list_nempty();
   assert(list_modify(liste, 14, 2) == 0);
-  assert(list_modify(liste, 0, 14) == 1);
-  list_modify(liste, 0, 14);
+  assert(list_modify(liste, 1, 14) == 1);
+  list_modify(liste, 1, 14);
   assert(find(liste, 14) == 0);
   list_free(liste);
   printf("*");

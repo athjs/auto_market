@@ -59,35 +59,35 @@ int is_empty(struct list *list) {
 // When there are new articles ref in the market or the amount of the article is
 // modified
 
-int list_add(struct list *list, int ref, int number) {
+int list_add(struct list *list, struct item *item, int number) {
   if (!list)
     return -1;
   // case i the item is in the array
   if (is_empty(list)) {
     list->item = malloc(sizeof(struct item));
     list->item[0].number = number;
-    list->item[0].ref = ref;
+    list->item[0].ref = item->ref;
+    list->item[0].cost = item->cost;
+    list->item[0].price = item->price;
     list->capacity++;
     list->size++;
     return 1;
   }
-  int here = find(list, ref);
-  if (here < list->capacity) {
+  int here = find(list, item->ref);
+  if (list->item[here].ref != 0){
     list->item[here].number += number;
-  }
-  // item isn't in the database
-  else {
-    // case the data base is big enough
-    if (list->size < list->capacity) {
-      list->item[here].ref = ref;
-      list->item[here].number = number;
+    return 1; 
     }
-    // case the database isn't big enough
+  // case the data base is big enough
+  if (list->size == list->capacity) {
     list->item = realloc(list->item, 2 * list->capacity * sizeof(struct item));
     list->capacity *= 2;
-    list->item[here].ref = ref;
-    list->item[here].number = number;
   }
+  list->item[here].ref = item->ref;
+  list->item[here].number = number;
+  list->item[here].cost = item->cost;
+  list->item[here].price = item->price;
+
   list->size++;
   return 1;
 }

@@ -25,12 +25,12 @@ int item_purchase(struct list *list, struct item *item, int amount) {
   if (!list)
     return -1;
   if (is_possible(list, item, amount)) {
-    list_add(list, item_ref(item), amount);
+    list_add(list, item, amount);
     new_balance(list, -amount * cost_item(item));
     return amount;
   }
   int max = max_possible(list, item);
-  list_add(list, item_ref(item), max);
+  list_add(list, item, max);
   new_balance(list, -max * cost_item(item));
   return max;
 }
@@ -40,13 +40,15 @@ int item_purchase(struct list *list, struct item *item, int amount) {
 int item_sell(struct list *list, struct item *item, int amount) {
   if (!list)
     return -1;
-  if (item_number(item,list) >= amount) {
+  if (is_empty(list))
+    return 0;
+  if (item_number(item, list) >= amount) {
     list_remove(item_ref(item), list);
     new_balance(list, amount * price_item(item));
     return amount;
   }
-  int max = item_number(item,list);
-  new_balance(list, item_number(item,list) * price_item(item));
-  list_add(list, item_ref(item), item_number(item,list));
+  int max = item_number(item, list);
+  new_balance(list, item_number(item, list) * price_item(item));
+  list_add(list, item, item_number(item, list));
   return max;
 }
