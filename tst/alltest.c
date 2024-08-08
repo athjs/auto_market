@@ -13,6 +13,7 @@ int main() {
   test_is_possible();
   test_max_possible();
   test_item_purchase();
+  test_item_sell();
   printf("\n");
   return EXIT_SUCCESS;
 }

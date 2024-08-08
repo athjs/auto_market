@@ -6,4 +6,6 @@ void test_is_possible();
 void test_max_possible();
 
 void test_item_purchase();
+
+void test_item_sell();
 #endif

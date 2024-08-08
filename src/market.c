@@ -74,10 +74,10 @@ int list_add(struct list *list, struct item *item, int number) {
     return 1;
   }
   int here = find(list, item->ref);
-  if (list->item[here].ref != 0){
+  if (list->item[here].ref != 0) {
     list->item[here].number += number;
-    return 1; 
-    }
+    return 1;
+  }
   // case the data base is big enough
   if (list->size == list->capacity) {
     list->item = realloc(list->item, 2 * list->capacity * sizeof(struct item));
