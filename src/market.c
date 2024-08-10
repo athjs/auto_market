@@ -183,6 +183,16 @@ int new_balance(struct list *list, int amount) {
   }
 }
 
+int *got_references(struct list *list) {
+  if (list->size == 0)
+    return NULL;
+  int *references = malloc(sizeof(int) * list->size);
+  for (int i = 0; i < list->size; ++i) {
+    references[i] = list->item[i].ref;
+  }
+  return references;
+}
+
 // frees the list
 void list_free(struct list *list) {
   free(list->item);

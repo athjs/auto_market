@@ -46,4 +46,6 @@ int new_balance(struct list *list, int amount);
 int item_purchase(struct list *list, struct item *item, int amount);
 
 int item_sell(struct list *list, struct item *item, int amount);
+
+int *got_references(struct list *list);
 #endif // !_MARKET_H_
