@@ -2,9 +2,9 @@
 #include "market.h"
 #include <stdlib.h>
 
-struct list *  broken_item(struct list *list, struct item *item, int number) {
+struct list *broken_item(struct list *list, struct item *item, int number) {
   list_add(list, item, -number);
-  return list; 
+  return list;
 }
 
 int is_enough(struct list *list, struct item *item) {
@@ -12,6 +12,12 @@ int is_enough(struct list *list, struct item *item) {
     return 1;
   else
     return 0;
+}
+
+struct list *item_ood(struct list *list, struct item *item, int number) {
+  // if (is_item_ood(item, )) when date will be implemented
+  list_add(list, item, number);
+  return list;
 }
 
 struct list *prepare_order(struct list *list, struct item *item) {
@@ -36,7 +42,7 @@ struct list *make_order(struct list *list, struct list *order) {
   for (int i = 0; i < length; ++i) {
 
     item = access_item(order, references[i]);
-    item_purchase(list, item, MINIMUM-item_number(item,order ));
+    item_purchase(list, item, MINIMUM - item_number(item, order));
   }
   return list;
 }

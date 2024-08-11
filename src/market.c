@@ -4,11 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct date {
+  int day;
+  int month;
+  int year;
+};
+
 struct item {
   int ref;
   int cost;
   int price;
   int number;
+  struct date date;
 };
 
 struct list {
@@ -191,6 +198,17 @@ int *got_references(struct list *list) {
     references[i] = list->item[i].ref;
   }
   return references;
+}
+
+int is_item_ood(struct item *item, struct date *date) {
+  if (item->date.year < date->year)
+    return 1;
+  if (item->date.year <= date->year && item->date.month > date->month)
+    return 1;
+  if (item->date.year <= date->year && item->date.month <= date->month &&
+      item->date.day > date->day)
+    return 1;
+  return 0;
 }
 
 // frees the list

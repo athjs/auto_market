@@ -10,6 +10,8 @@ struct list *broken_item(struct list *list, struct item *item, int number);
 
 int is_enough(struct list *list, struct item *item);
 
+struct list *item_ood(struct list *list, struct item *item, int number);
+
 struct list *prepare_order(struct list *list, struct item *item);
 
 struct list *make_order(struct list *list, struct list *order);

@@ -5,6 +5,8 @@ struct item;
 
 struct list;
 
+struct date;
+
 struct list *create(void);
 
 struct item *product(int ref, int cost, int price, int number);
@@ -48,4 +50,7 @@ int item_purchase(struct list *list, struct item *item, int amount);
 int item_sell(struct list *list, struct item *item, int amount);
 
 int *got_references(struct list *list);
+
+int is_item_ood(struct item *item, struct date *date);
+
 #endif // !_MARKET_H_
